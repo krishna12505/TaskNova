@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskNova | Task Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="brand-symbol">T</span>
+                <span>TaskNova</span>
+            </div>
+
+            <p class="sidebar-heading">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a href="#" class="nav-link active" data-filter="all">
+                    <span>▦</span> Dashboard
+                </a>
+                <a href="#tasks" class="nav-link" data-filter="all">
+                    <span>☷</span> All Tasks
+                </a>
+                <a href="#tasks" class="nav-link" data-filter="Pending">
+                    <span>◷</span> Pending Tasks
+                </a>
+                <a href="#tasks" class="nav-link" data-filter="Completed">
+                    <span>✓</span> Completed Tasks
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                TaskNova Workspace
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">YOUR PERSONAL WORKSPACE</p>
+                    <h1>Task Dashboard</h1>
+                    <p class="subtitle">Organize your day. Get things done.</p>
+                </div>
+
+                <div class="topbar-actions">
+                    <button
+                        type="button"
+                        id="theme-toggle"
+                        class="theme-toggle"
+                        aria-label="Switch to dark theme"
+                        title="Switch theme"
+                    >
+                        <span id="theme-icon" aria-hidden="true">🌙</span>
+                        <span id="theme-label">Dark Mode</span>
+                    </button>
+
+                    <button id="add-task-button" class="primary-button">
+                        + Add New Task
+                    </button>
+                </div>
+            </header>
+
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <p>Total Tasks</p>
+                    <h2 id="total-count">0</h2>
+                    <span>All your tasks</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>Pending</p>
+                    <h2 id="pending-count">0</h2>
+                    <span>Still in progress</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>Completed</p>
+                    <h2 id="completed-count">0</h2>
+                    <span>Tasks finished</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>Overdue</p>
+                    <h2 id="overdue-count">0</h2>
+                    <span>Past their deadline</span>
+                </article>
+            </section>
+
+            <section class="task-section" id="tasks">
+                <div class="section-heading">
+                    <div>
+                        <h2>My Tasks</h2>
+                        <p>Manage and track your daily activities.</p>
+                    </div>
+
+                    <input
+                        type="search"
+                        id="search-input"
+                        placeholder="Search tasks..."
+                        aria-label="Search tasks"
+                    >
+                </div>
+
+                <div class="task-toolbar">
+                    <div class="filter-buttons">
+                        <button class="filter-button active" data-filter="all">
+                            All Tasks
+                        </button>
+                        <button class="filter-button" data-filter="Pending">
+                            Pending
+                        </button>
+                        <button class="filter-button" data-filter="Completed">
+                            Completed
+                        </button>
+                    </div>
+
+                    <label class="priority-filter">
+                        Priority:
+                        <select id="priority-filter">
+                            <option value="all">All priorities</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div id="message" role="status" aria-live="polite"></div>
+
+                <div id="task-list" class="task-list">
+                    <p class="loading-message">Loading tasks...</p>
+                </div>
+            </section>
+
+            <section class="task-form-section" id="task-form-section" hidden>
+                <div class="form-heading">
+                    <div>
+                        <h2 id="form-title">Create New Task</h2>
+                        <p>Add the details of your task below.</p>
+                    </div>
+                    <button type="button" id="cancel-task-button"
+                            class="secondary-button">Cancel</button>
+                </div>
+
+                <form id="task-form">
+                    <label for="title">Task Title *</label>
+                    <input
+                        id="title"
+                        name="title"
+                        type="text"
+                        placeholder="e.g. Complete project report"
+                        required
+                        maxlength="200"
+                    >
+
+                    <label for="description">Description</label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        rows="4"
+                        placeholder="Describe your task..."
+                    ></textarea>
+
+                    <div class="form-row">
+                        <div>
+                            <label for="deadline">Deadline</label>
+                            <input id="deadline" name="deadline" type="date">
+                        </div>
+
+                        <div>
+                            <label for="priority">Priority</label>
+                            <select id="priority" name="priority">
+                                <option value="Low">Low</option>
+                                <option value="Medium" selected>Medium</option>
+                                <option value="High">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status">
+                            <option value="Pending" selected>Pending</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+
+                    <p id="form-error" class="error-message"
+                       role="alert"></p>
+
+                    <button type="submit" id="save-task-button"
+                            class="primary-button">
+                        Save Task
+                    </button>
+                </form>
+            </section>
+
+            <footer class="page-footer">
+                TaskNova · Stay organized, stay productive.
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
